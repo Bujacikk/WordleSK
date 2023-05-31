@@ -1,0 +1,96 @@
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  .matrix {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .title{
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+  }
+
+  hr {
+    width: 500px;
+  }
+
+  .row {
+    display: flex;
+  }
+  
+  .array{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #3a3a3c;
+    margin: 2px;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .key {
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    margin: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .key:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .key:active {
+    background-color: #cccccc;
+  }
+  
+  #backspace, #enter {
+    width: 100px;
+    background-color: #818384;
+    color: white;
+  }
+  
+  #backspace:hover, #enter:hover {
+    background-color: #cccccc;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.slider {
+  margin: 10px;
+  color: blue;
+  margin-left: 20px;
+}
+
+body{
+    background-color: #121313;
+}
