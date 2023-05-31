@@ -8,5 +8,8 @@ Momentalne je funkčný prototyp.
 
 ![alt text](https://github.com/Bujacikk/WordleSK/blob/main/wordle.png?raw=true)
 
+## TO DO
+- Pridať slovník slov napojený na firebase
+
 
 
