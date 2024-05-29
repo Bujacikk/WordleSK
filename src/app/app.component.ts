@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
-import { Console } from 'console';
-
+import { WordEditingService } from './services/word-editing/word-editing.service'
+import { GameLoopService } from './services/gameloop/game-loop.service';
+import { BoxPaintingService } from './services/box-painting/box-painting.service';
 
 @Component({
   selector: 'app-root',
@@ -9,142 +10,41 @@ import { Console } from 'console';
 })
 export class AppComponent {
   
-  row = 0;
-  randomWord = 'päťka'
-  copyOfRandomWord = this.randomWord
+  constructor(private wordEditingService: WordEditingService, 
+    private gameLoop: GameLoopService, private boxPainting: BoxPaintingService) { }
+
   isEnded = false;
-
-
-  matrix: string[][] = 
-  [['','','','','',],
-  ['','','','','',],
-  ['','','','','',],
-  ['','','','','',],
-  ['','','','','',],
-  ['','','','','',]]
-  
-  // 0 - WHITE
-  // 1 - GREEN
-  // 2 - GREY
-  // 3 - YELLOW
-  matrixColor: number[][] = 
-  [[0,0,0,0,0,],
-  [0,0,0,0,0,],
-  [0,0,0,0,0,],
-  [0,0,0,0,0,],
-  [0,0,0,0,0,],
-  [0,0,0,0,0,]]
-  
-  colorRow = 0;
-  colorColumn = 0;
+  row = 0;
+  matrix = this.gameLoop.getMatrix();
+  matrixColor = this.boxPainting.getMatrixColor();
   matrixLength = this.matrix[0].length;
-  isDifficultyHard = true;
-  isDisabled = false;
+  isDifficultyHard = this.gameLoop.getIsDifficultyHard();
+  isDisabled = this.gameLoop.getIsDisabled();
 
-  public dvojice: [string, string][] = [
-    
-  ];
+
+  public dvojice = this.boxPainting.getTuple();
 
   ngOnInit(): void {
-    this.resetColorForKeyboard()
+    this.resetColorForKeyboard();
+    this.updateVariables();
   }
-
-  getWord()
-  {
-
-  }
-
-  // Funkcia nahradí v slove specialne znaky pre lahku obtiažnosť
-  public removeSpecialCharsFromWord(slovo: string): string {
-    const specialneZnaky: { [key: string]: string } = {
-      ľ: 'l', š: 's',
-      č: 'c', ť: 't',
-      ž: 'z', ý: 'y',
-      á: 'a', í: 'i',
-      é: 'e', ĺ: 'l',
-      ď: 'd', ŕ: 'r',
-      ó: 'o', ú: 'u',
-      ä: 'a', ň: 'n',
-      ô: 'o',
-      // ďalšie špeciálne znaky a ich ekvivalenty
-    };
-  
-    let upraveneSlovo = '';
-  
-    for (let i = 0; i < slovo.length; i++) {
-      const znak = slovo[i];
-      const nahradnyZnak = specialneZnaky[znak];
-  
-      if (nahradnyZnak) {
-        upraveneSlovo += nahradnyZnak;
-      } else {
-        upraveneSlovo += znak;
-      }
-    }
-  
-    return upraveneSlovo;
-  }
-
 
   // Resetuje/setuje defaultne farby pre klavesnicu
   public resetColorForKeyboard()
   {
-    for(let x = 65; x < 91; x++)
-    {
-      let char = String.fromCharCode(x);
-      this.dvojice.push([char, '#818384']);
-    }
-    this.dvojice.push(['Ľ', '#818384']);
-    this.dvojice.push(['Š', '#818384']);
-    this.dvojice.push(['Č', '#818384']);
-    this.dvojice.push(['Ť', '#818384']);
-    this.dvojice.push(['Ž', '#818384']);
-    this.dvojice.push(['Ý', '#818384']);
-    this.dvojice.push(['Á', '#818384']);
-    this.dvojice.push(['Í', '#818384']);
-    this.dvojice.push(['É', '#818384']);
-    this.dvojice.push(['Ĺ', '#818384']);
-    this.dvojice.push(['Ď', '#818384']);
-    this.dvojice.push(['Ŕ', '#818384']);
-    this.dvojice.push(['Ó', '#818384']);
-    this.dvojice.push(['Ú', '#818384']);
-    this.dvojice.push(['Ä', '#818384']);
-    this.dvojice.push(['Ň', '#818384']);
-    this.dvojice.push(['Ô', '#818384']);
+    this.boxPainting.resetColorForKeyboard();
   }
 
   // Funkcia dokáže nastavit/zmeniť farbu v tuple pre pismeno
   public setColorForKey(letter: string, color: string)
   {
-    for(let x = 0; x < this.dvojice.length; x++)
-    {
-      if((letter == this.dvojice[x][0]) && ((color === 'green') || (color === '#b59f3b' && this.dvojice[x][1] !== 'green') || (color === '#333331' && this.dvojice[x][1] !== 'green' && this.dvojice[x][1] !== '#b59f3b')))
-      {
-        this.dvojice.splice(x,1)
-        this.dvojice.push([letter, color])
-      }
-    }
+    this.boxPainting.setColorForKey(letter, color);
   }
 
   // Funkcia čita farbu na zaklade pismena z tuple do divka
   public getBackgroundColorKey(letter: string) : string
   {
-    for(let x = 0; x < this.dvojice.length; x++)
-    {
-      if(letter == this.dvojice[x][0]) return this.dvojice[x][1]
-    }
-    return 'white';
-  }
-
-  // Funkcia zmeni farby pre pismena po stlačeni enter
-  public getArrayOfColorForKeyBoard()
-  {
-    var guessedWord = this.takeAGuess();
-    var numberAnwers = this.checkWord(this.takeAGuess());
-    for(let x = 0; x < guessedWord.length; x++)
-    {
-      this.setColorForKey(guessedWord[x], this.getColor(numberAnwers[x]))
-    }
+    return this.boxPainting.getBackgroundColorKey(letter)
   }
 
   // Slider meni obtiažnosť
@@ -153,63 +53,24 @@ export class AppComponent {
       if(this.isDifficultyHard == true)
       {
         // Hard
-        this.randomWord = this.copyOfRandomWord;
+        this.wordEditingService.switchDiff("hard")
       }
       else{
         // Easy
-        this.copyOfRandomWord = this.randomWord;
-        this.randomWord = this.removeSpecialCharsFromWord(this.randomWord);
+        this.wordEditingService.switchDiff("easy")
       }
   }
 
   // Funkcia vrati na aku farbu sa ma zmenit policko
   public getColor(number : number) : string
   {
-    switch (number) {
-        case 0:
-            return 'none';
-        case 1:
-            return 'green';
-        case 2:
-            return '#333331';
-        default:
-            return '#b59f3b';
-    }
+    return this.boxPainting.getColor(number);
   }
 
   // Funkcia prechadza polom a vrati ake cislo je na kazdej pozicii
   public colorState() : number
   {
-    var color = this.matrixColor[this.colorRow][this.colorColumn];
-    if(this.colorColumn < 4)
-    {
-      this.colorColumn++;
-    }
-    else
-    {
-      this.colorColumn = 0;
-      this.colorRow++;
-    }
-    if(this.colorRow == 6)
-    {
-      this.colorRow = 0;
-      this.colorColumn = 0;
-    }
-    return color;
-  }
-
-  // Vrati hodnotu stlpca v mriezke
-  public getColumn(): number
-  {
-    var counter = 0;
-    for(let i = 0; i < this.matrixLength; i++)
-    {
-      if(this.matrix[this.row][i] != '')
-      {
-        counter++;
-      }
-    }
-    return counter;
+    return this.boxPainting.colorState();
   }
 
   // Keyboard input
@@ -290,135 +151,38 @@ export class AppComponent {
 
   // Posle pismeno do mriezky
   public sentLetter(letter: string): void {
-    if(this.isEnded == false)
-    {
-      if(letter.length != 1) return;
-    
-      for(let i = 0; i < this.matrixLength; i++)
-      {
-        if(this.matrix[this.row][i] == '')
-        {
-          this.matrix[this.row][i] = letter;
-          return;
-        }
-      }
-    }
+    this.gameLoop.sentLetter(letter);
   }
 
   //Vymazavanie znaku
   public backspace(): void{
-    this.matrix[this.row][this.getColumn()-1] = '';
+    this.gameLoop.backspace();
   }
 
   //Potvrdi slovo v mriezke
   public enter(): void {
-    console.log(this.isDifficultyHard)
-    this.isDisabled = true;
-    this.getArrayOfColorForKeyBoard();
-    if(this.getColumn() == 5)
-    {
-      var numberAnwers = this.checkWord(this.takeAGuess());
-      this.addRowNumbersIntoMatrixColor(numberAnwers);
-      if(this.sumArray(numberAnwers) == 5)
-      {
-        this.isEnded = true;
-      }
-      //this.checkWord(word);
-      this.row++;
-    }
-    if(this.row == this.matrixLength) return;
-  }
-
-  //Vrati slovo ktore uzivatel zadal do mriezky
-  public takeAGuess() : string{
-    var word: string = '';
-    for(let i = 0; i < 5; i++)
-    {
-        word = word + this.matrix[this.row][i];
-    }
-    return word;
-  }
-
-  // 1 - GREEN
-  // 2 - GREY
-  // 3 - YELLOW
-  // Skontroluje vitazne slovo
-  public checkWord(word1: string): number[] {
-    var word2 = this.randomWord.toUpperCase()
-    var repeat = false;
-    const result: number[] = [];
-
-    if (word1 === word2) {
-      for (let i = 0; i < word1.length; i++) {
-        result.push(1);
-      }
-      return result;
-    }
-
-    let minLength = Math.min(word1.length, word2.length);
-
-    for (let i = 0; i < minLength; i++) {
-      for (let x = 0; x < i; x++) {
-        if (word1.charAt(x) === word1.charAt(i)) {
-          repeat = true;
-        }
-      }
-      
-      if (repeat === false) {
-        if (word1.charAt(i) === word2.charAt(i)) {
-          result.push(1);
-          
-        } else if (word2.includes(word1.charAt(i))) {
-          result.push(3);
-          
-        } else {
-          result.push(2);
-          
-        }
-      } 
-      else{
-        result.push(2);
-        repeat = false;
-      }
-    }
-
-    return result;
-  }
-
-  public addRowNumbersIntoMatrixColor(numbers: number[]) : void
-  {
-      for(let i = 0; i < numbers.length; i++)
-      {
-        this.matrixColor[this.row][i] = numbers[i];
-      }
-  }
-
-  public sumArray(arr: number[]): number {
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-      sum += arr[i];
-    }
-    return sum;
+    this.gameLoop.enter();
+    this.updateVariables();
   }
 
   // Resetuje hru
   public resetGame(): void
   {
-    this.isDisabled = false;
-    this.dvojice = [];
-    this.resetColorForKeyboard();
-    this.isEnded = false;
-    for(let i = 0; i < 6; i++)
-    {
-        for(let y = 0; y < 5; y++)
-        {
-          this.matrix[i][y] = '';
-          this.matrixColor[i][y] = 0;
-          this.row = 0;
-          this.colorRow = 0;
-          this.colorColumn = 0;
-        }
-    }
+    this.gameLoop.resetGame();
+    this.updateVariables();
+  }
+
+  public updateVariables(): void
+  {
+    this.matrix = this.gameLoop.getMatrix();
+    this.row = this.gameLoop.getRow();
+    this.isDisabled = this.gameLoop.getIsDisabled();
+    //this.isDifficultyHard = this.gameLoop.getIsDifficultyHard();
+    this.matrixLength = this.gameLoop.getMatrix()[0].length;
+    this.isEnded = this.gameLoop.getIsEnded();
   }
 
 }
+
+// TO DO
+// Enter len s 5 slovami

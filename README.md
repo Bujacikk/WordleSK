@@ -6,10 +6,9 @@ Hra založená na križovkárskej appke od New York Times. Cieľom bolo vytvori�
 
 Momentalne je funkčný prototyp.
 
-![alt text](https://github.com/Bujacikk/WordleSK/blob/main/wordle.png?raw=true)
-
 ## TO DO
-- Pridať slovník slov napojený na firebase
-
-
+- Responzivita klavesnice
+- Pridanie slovníka pre nové slová
+- Pridanie animacií pre zobrazenie farieb
+- Písanie aj pomocov klávesnice, nie len klikanie.
 

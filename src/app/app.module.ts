@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig) // Your config
   ],
   providers: [],
   bootstrap: [AppComponent]

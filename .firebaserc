@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "wordle-22901"
+  },
+  "targets": {
+    "wordle-22901": {
+      "hosting": {
+        "wordle": [
+          "wordle-22901"
+        ]
+      }
+    }
+  }
+}

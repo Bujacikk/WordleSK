@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig : {
+    apiKey: "AIzaSyDjd8bs9qBkyxMPpdg-mwFm_mpz9erm10Y",
+    authDomain: "wordle-22901.firebaseapp.com",
+    databaseURL: "https://wordle-22901-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "wordle-22901",
+    storageBucket: "wordle-22901.appspot.com",
+    messagingSenderId: "477113733953",
+    appId: "1:477113733953:web:496198f9c857997a1007c0",
+    measurementId: "G-WF1JRW3DMY"
+  }
 };
 
 /*
