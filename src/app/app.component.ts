@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { WordEditingService } from './services/word-editing/word-editing.service'
 import { GameLoopService } from './services/gameloop/game-loop.service';
 import { BoxPaintingService } from './services/box-painting/box-painting.service';
+import { FirebaseService } from './services/firebase/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ import { BoxPaintingService } from './services/box-painting/box-painting.service
 export class AppComponent {
   
   constructor(private wordEditingService: WordEditingService, 
-    private gameLoop: GameLoopService, private boxPainting: BoxPaintingService) { }
+    private gameLoop: GameLoopService, 
+    private boxPainting: BoxPaintingService,
+    private firebaseService: FirebaseService) { }
 
   isEnded = false;
   row = 0;
@@ -21,13 +24,16 @@ export class AppComponent {
   isDifficultyHard = this.gameLoop.getIsDifficultyHard();
   isDisabled = this.gameLoop.getIsDisabled();
 
+  
 
   public dvojice = this.boxPainting.getTuple();
 
   ngOnInit(): void {
     this.resetColorForKeyboard();
     this.updateVariables();
+    this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
   }
+
 
   // Resetuje/setuje defaultne farby pre klavesnicu
   public resetColorForKeyboard()
@@ -151,7 +157,11 @@ export class AppComponent {
 
   // Posle pismeno do mriezky
   public sentLetter(letter: string): void {
-    this.gameLoop.sentLetter(letter);
+    //console.log(this.gameLoop.getIsEnded())
+    if(this.gameLoop.getIsEnded() == false)
+      {
+        this.gameLoop.sentLetter(letter);
+      }
   }
 
   //Vymazavanie znaku
@@ -169,7 +179,8 @@ export class AppComponent {
   public resetGame(): void
   {
     this.gameLoop.resetGame();
-    this.updateVariables();
+    this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
+    //this.updateVariables();
   }
 
   public updateVariables(): void
@@ -184,5 +195,3 @@ export class AppComponent {
 
 }
 
-// TO DO
-// Enter len s 5 slovami

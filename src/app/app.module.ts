@@ -9,10 +9,14 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from '@angular/fire/compat';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PopUpComponent } from './components/pop-up/pop-up.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,7 +25,9 @@ import { AngularFireModule } from '@angular/fire/compat';
     MatIconModule,
     MatSlideToggleModule,
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig) // Your config
+    AngularFireModule.initializeApp(environment.firebaseConfig), // Your config
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WordEditingService {
-  guessedWord = 'päťka'
-  guessedWordCopy = 'päťka'
+  guessedWord = '';
+  guessedWordCopy = '';
+  value: any;
+
+  constructor(private firebaseService: FirebaseService) { }
+
+  public generateRandomNumber(): number {
+    const min = 1;
+    const max = 8391;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   // Funkcia nahradí v slove specialne znaky pre lahku obtiažnosť
   public removeSpecialCharsFromWord(word: string): string {
     const specialneZnaky: { [key: string]: string } = {
-      ľ: 'l', š: 's',
-      č: 'c', ť: 't',
-      ž: 'z', ý: 'y',
-      á: 'a', í: 'i',
-      é: 'e', ĺ: 'l',
-      ď: 'd', ŕ: 'r',
-      ó: 'o', ú: 'u',
-      ä: 'a', ň: 'n',
-      ô: 'o',
+      Ľ: 'L', Š: 'S',
+      Č: 'C', Ť: 'T',
+      Ž: 'Z', Ý: 'Y',
+      Á: 'A', Í: 'I',
+      É: 'E', Ĺ: 'L',
+      Ď: 'D', Ŕ: 'R',
+      Ó: 'O', Ú: 'U',
+      Ä: 'A', Ň: 'N',
+      Ô: 'O',
       // ďalšie špeciálne znaky a ich ekvivalenty
     };
   
@@ -53,13 +63,24 @@ export class WordEditingService {
       {
         this.guessedWordCopy = this.guessedWord;
         this.guessedWord = this.removeSpecialCharsFromWord(this.guessedWord);
+        console.log("Easy je " + this.guessedWord);
       }
     if(diff === "hard")
       {
-      this.guessedWord = this.guessedWordCopy;
-    }
+       this.guessedWord = this.guessedWordCopy;
+       console.log("Hard je " + this.guessedWord);
+      }
     
   }
 
-  constructor() { }
+  getValueByKey(key: string) {
+    this.firebaseService.getStringByKey(key).subscribe(data => {
+      this.value = data;
+      this.value = this.value.substring(0,5)  // Lebo tam je biely znak neviem odkial
+      this.setGuessedWord(this.value);
+      console.log(this.getWord());
+      
+    });
+  }
+
 }

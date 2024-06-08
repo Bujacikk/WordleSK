@@ -7,8 +7,5 @@ Hra založená na križovkárskej appke od New York Times. Cieľom bolo vytvori�
 Momentalne je funkčný prototyp.
 
 ## TO DO
-- Responzivita klavesnice
-- Pridanie slovníka pre nové slová
 - Pridanie animacií pre zobrazenie farieb
-- Písanie aj pomocov klávesnice, nie len klikanie.
-
+- Kontrola zadavaneho slova, resp. je to realne slovo?

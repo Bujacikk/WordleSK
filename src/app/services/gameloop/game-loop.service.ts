@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { WordEditingService } from '../word-editing/word-editing.service'
 import { BoxPaintingService } from '../box-painting/box-painting.service';
-import { Observable, of } from 'rxjs';
+import { PopUpComponent } from '../../components/pop-up/pop-up.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -61,20 +62,28 @@ export class GameLoopService {
 
   //Potvrdi slovo v mriezke
   public enter(): void {
-    console.log("Diff = " + this.isDifficultyHard)
-    this.isDisabled = true;
-    this.boxPainting.getArrayOfColorForKeyBoard(this.takeAGuess(), this.checkWord(this.takeAGuess()));
     if(this.getColumn() == 5)
     {
+      this.isDisabled = true;
+      this.boxPainting.getArrayOfColorForKeyBoard(this.takeAGuess(), this.checkWord(this.takeAGuess()));
+
       var numberAnwers = this.checkWord(this.takeAGuess());
       this.boxPainting.addRowNumbersIntoMatrixColor(numberAnwers, this.row);
       if(this.sumArray(numberAnwers) == 5)
       {
         this.isEnded = true;
+        this.dialog.open(PopUpComponent);
+        return;
       }
-      this.row++;
+      if(this.row < 5)  this.row++ //Stupidny fix, ale neslo inak
+      else this.dialog.open(PopUpComponent);
+      
     }
-    if(this.row == this.matrixLength) return;
+    if(this.row == (this.matrixLength + 1))
+    {
+      return; 
+    }
+    
   }
 
   //Vrati slovo ktore uzivatel zadal do mriezky
@@ -88,47 +97,50 @@ export class GameLoopService {
   }
 
   // Skontroluje vitazne slovo
-  public checkWord(word1: string): number[] {
-    var word2 = this.wordEditingService.getWord().toUpperCase() // Tu je chyba
-    var repeat = false;
-    const result: number[] = [];
+public checkWord(word1: string): number[] {
+  //var word2 : string = this.wordEditingService.getWord().toUpperCase() // Tu je chyba
+  var word2 = this.wordEditingService.getWord();
 
-    if (word1 === word2) {
+  let result: number[] = [];
+
+  // Skontroluje ci su stringy rovnake
+  if (word1 === word2) {
       for (let i = 0; i < word1.length; i++) {
-        result.push(1);
+          result.push(1);
       }
       return result;
-    }
-
-    let minLength = Math.min(word1.length, word2.length);
-
-    for (let i = 0; i < minLength; i++) {
-      for (let x = 0; x < i; x++) {
-        if (word1.charAt(x) === word1.charAt(i)) {
-          repeat = true;
-        }
-      }
-      
-      if (repeat === false) {
-        if (word1.charAt(i) === word2.charAt(i)) {
-          result.push(1);
-          
-        } else if (word2.includes(word1.charAt(i))) {
-          result.push(3);
-          
-        } else {
-          result.push(2);
-          
-        }
-      } 
-      else{
-        result.push(2);
-        repeat = false;
-      }
-    }
-
-    return result;
   }
+
+  let minLength = Math.min(word1.length, word2.length);
+
+  // Mapy na sledovanie výskytov písmen
+  let word1CharCount: { [key: string]: number } = {};
+  let word2CharCount: { [key: string]: number } = {};
+
+  // Spočítame výskyty každého písmena v word1 a word2
+  for (let i = 0; i < minLength; i++) {
+      word1CharCount[word1[i]] = (word1CharCount[word1[i]] || 0) + 1;
+      word2CharCount[word2[i]] = (word2CharCount[word2[i]] || 0) + 1;
+  }
+
+  for (let i = 0; i < minLength; i++) {
+      if (word1[i] === word2[i]) {
+          result.push(1);
+      } else if (word2.includes(word1[i])) {
+          if (word1CharCount[word1[i]] > 1) {
+              result.push(3);
+          } else {
+              result.push(3);
+          }
+      } else {
+          result.push(2);
+      }
+  }
+
+  console.log(result);
+  return result;
+}
+
 
   public sumArray(arr: number[]): number {
     let sum = 0;
@@ -183,5 +195,6 @@ export class GameLoopService {
   }
 
   constructor(private wordEditingService: WordEditingService, 
-    private boxPainting: BoxPaintingService) { }
+    private boxPainting: BoxPaintingService,
+    private dialog : MatDialog) { }
 }
