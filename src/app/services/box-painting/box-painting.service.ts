@@ -18,11 +18,27 @@ export class BoxPaintingService {
   [0,0,0,0,0,],
   [0,0,0,0,0,]]
 
+  isRowAnimated: boolean[][] = [
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false]];
+
   public dvojice: [string, string][] = [
   ];
   colorRow = 0;
   colorColumn = 0;
    
+  // Funkcia nastaví, ktorý riadok sa ma animovať
+  public setAnimation(row : number){
+    for(let x = 0; x < 5; x++)
+      {
+        this.isRowAnimated[row][x] = true;
+      }
+  }
+
   // Resetuje/setuje defaultne farby pre klavesnicu
   public resetColorForKeyboard()
   {
@@ -112,8 +128,6 @@ export class BoxPaintingService {
   // Funkcia zmeni farby pre pismena po stlačeni enter
   public getArrayOfColorForKeyBoard(guessedWord: string, numberAnwers: number[])
   {
-    //var guessedWord = this.takeAGuess();
-    //var numberAnwers = this.checkWord(guessedWord);
     for(let x = 0; x < guessedWord.length; x++)
     {
       this.setColorForKey(guessedWord[x], this.getColor(numberAnwers[x]))
@@ -158,5 +172,13 @@ export class BoxPaintingService {
     return this.dvojice;
   }
 
+  public getIsRowAnimated()
+  {
+    return this.isRowAnimated;
+  }
+
+  public resetIsRowAnimated(i : number, y : number){
+    this.isRowAnimated[i][y] = false;
+  }
   constructor() { } 
 }

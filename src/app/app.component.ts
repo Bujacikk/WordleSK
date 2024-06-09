@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import { WordEditingService } from './services/word-editing/word-editing.service'
 import { GameLoopService } from './services/gameloop/game-loop.service';
 import { BoxPaintingService } from './services/box-painting/box-painting.service';
-import { FirebaseService } from './services/firebase/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +12,7 @@ export class AppComponent {
 
   constructor(private wordEditingService: WordEditingService,
     private gameLoop: GameLoopService,
-    private boxPainting: BoxPaintingService,
-    private firebaseService: FirebaseService) { }
+    private boxPainting: BoxPaintingService) { }
 
   isEnded = false;
   row = 0;
@@ -23,10 +21,8 @@ export class AppComponent {
   matrixLength = this.matrix[0].length;
   isDifficultyHard = this.gameLoop.getIsDifficultyHard();
   isDisabled = this.gameLoop.getIsDisabled();
-
-
-
-  public dvojice = this.boxPainting.getTuple();
+  dvojice = this.boxPainting.getTuple();
+  isRowAnimated = this.boxPainting.getIsRowAnimated();
 
   ngOnInit(): void {
     this.resetColorForKeyboard();
@@ -34,6 +30,9 @@ export class AppComponent {
     this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
   }
 
+  public getHint(){
+    this.gameLoop.getHint();
+  }
 
   // Resetuje/setuje defaultne farby pre klavesnicu
   public resetColorForKeyboard() {
@@ -164,7 +163,6 @@ export class AppComponent {
 
   //Potvrdi slovo v mriezke
   public enter(): void {
-    console.log("Enter");
     this.gameLoop.enter();
     this.updateVariables();
   }
@@ -182,6 +180,7 @@ export class AppComponent {
     //this.isDifficultyHard = this.gameLoop.getIsDifficultyHard();
     this.matrixLength = this.gameLoop.getMatrix()[0].length;
     this.isEnded = this.gameLoop.getIsEnded();
+    this.isRowAnimated = this.boxPainting.getIsRowAnimated();
   }
 
 }

@@ -1,22 +1,22 @@
 <div class="main">
   <!--Arrays-->
   <div class="header">
-    <div class="title">Wordle SK</div>
     <mat-slide-toggle class="slider" [disabled]="isDisabled" [checked]="isDifficultyHard"
       (change)="changeStateOfSlide()">
     </mat-slide-toggle>
-    <!-- <button mat-flat-button class="mat-button" (click)="resetGame()">Ďalšie slovo</button> -->
+    <div class="title">Wordle SK</div>
+    <button mat-flat-button class="mat-button" (click)="getHint()" (keydown.enter)="$event.preventDefault()">Pomôcka</button>
     <!-- <div class="key" id="enter" (click)="resetGame()">Reset</div> -->
   </div>
   <hr>
 
 
   <div class="matrix">
-    <div *ngFor="let row of matrix" class="row">
-      <div *ngFor="let cell of row" [ngStyle]="{backgroundColor: getColor(colorState())}" class="array">{{ cell }}</div>
+    <div *ngFor="let row of matrix; let rowIndex = index" class="row">
+      <div *ngFor="let cell of row; let i = index" [ngStyle]="{backgroundColor: getColor(colorState())}" class="array" [class.animate]="isRowAnimated[rowIndex][i]">{{ cell }}</div>
     </div>
   </div>
-
+  
   <!--Keyboard-->
   <div class="keyboard">
     <div *ngIf="isDifficultyHard" class="row">
@@ -73,5 +73,4 @@
       <div class="key" id="backspace" (click)="backspace()">&larr;</div>
     </div>
   </div>
-
 </div>

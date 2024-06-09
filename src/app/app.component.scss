@@ -22,7 +22,7 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 600px;
 }
 
@@ -51,6 +51,7 @@ hr {
   margin: 2px;
   font-size: 30px;
   font-weight: bold;
+  transition: transform 0.5s;
 }
 
 .key {
@@ -107,4 +108,19 @@ body {
 
 .mat-button {
   background-color: rgb(255, 64, 129);
+}
+
+.animate {
+  animation: slideInFromLeft 1.3s forwards;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: rotateX(-180deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
 }

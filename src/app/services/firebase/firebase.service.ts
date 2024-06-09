@@ -9,10 +9,9 @@ import { map, catchError } from 'rxjs/operators';
 export class FirebaseService {
 
   constructor(private db: AngularFireDatabase) { }
-
+  
+  // Funkcia na získanie záznamu podľa kľúča
   getStringByKey(key: string): Observable<any> {
     return this.db.object('/' + key).valueChanges();
   }
-
-  
 }

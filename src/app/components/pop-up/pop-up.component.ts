@@ -24,7 +24,7 @@ export class PopUpComponent implements OnInit {
 
   ngOnInit(): void {
     this.word = this.wordEditingService.getWord();
-    this.sentResult(this.gameloop.getIsEnded());
+    this.sentResult(this.gameloop.getIsWin());
   }
 
   onClose(): void {

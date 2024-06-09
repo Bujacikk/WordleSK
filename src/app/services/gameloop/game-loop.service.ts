@@ -22,6 +22,11 @@ export class GameLoopService {
   isEnded = false;
   isDifficultyHard = true;
   isDisabled = false;
+  isWin = false;
+
+  constructor(private wordEditingService: WordEditingService,
+    private boxPainting: BoxPaintingService,
+    private dialog: MatDialog) { }
 
   // Vrati hodnotu stlpca v mriezke
   public getColumn(): number {
@@ -32,6 +37,20 @@ export class GameLoopService {
       }
     }
     return counter;
+  }
+
+  public getCurrentFreePossition(): number {
+    for (let i = 0; i < this.matrixLength; i++) {
+      if (this.matrix[this.row][i] == '') {
+        return i;
+      }
+    }
+    return 10;
+  }
+
+  public getHint(){
+      var possition = this.getCurrentFreePossition()
+      if(possition != 10) this.sentLetter(this.wordEditingService.getWord()[possition]);
   }
 
   // Posle pismeno do mriezky
@@ -53,9 +72,15 @@ export class GameLoopService {
     this.matrix[this.row][this.getColumn() - 1] = '';
   }
 
+  // Funkcia nastaví, ktorý riadok sa ma animovať
+  public setAnimation(row : number){
+    this.boxPainting.setAnimation(row)
+  }
+
   //Potvrdi slovo v mriezke
   public enter(): void {
     if (this.getColumn() == 5) {
+      this.setAnimation(this.row);
       this.isDisabled = true;
       this.boxPainting.getArrayOfColorForKeyBoard(this.takeAGuess(), this.checkWord(this.takeAGuess()));
 
@@ -63,6 +88,7 @@ export class GameLoopService {
       this.boxPainting.addRowNumbersIntoMatrixColor(numberAnwers, this.row);
       if (this.sumArray(numberAnwers) == 5) {
         this.isEnded = true;
+        this.isWin = true;  
         this.dialog.open(PopUpComponent);
         return;
       }
@@ -73,13 +99,12 @@ export class GameLoopService {
       else 
       {
         this.isEnded = true;
+        this.isWin = false;  
         this.dialog.open(PopUpComponent);
         return;
       }
       return
     }
-    console.log("pica0 " + this.getColumn())
-
   }
 
   //Vrati slovo ktore uzivatel zadal do mriezky
@@ -93,7 +118,6 @@ export class GameLoopService {
 
   // Skontroluje vitazne slovo
   public checkWord(word1: string): number[] {
-    //var word2 : string = this.wordEditingService.getWord().toUpperCase() // Tu je chyba
     var word2 = this.wordEditingService.getWord();
 
     let result: number[] = [];
@@ -151,6 +175,7 @@ export class GameLoopService {
     this.boxPainting.clearTuple();
     this.boxPainting.resetColorForKeyboard();
     this.isEnded = false;
+    
     for (let i = 0; i < 6; i++) {
       for (let y = 0; y < 5; y++) {
         this.matrix[i][y] = '';
@@ -158,6 +183,7 @@ export class GameLoopService {
         this.row = 0;
         this.boxPainting.setColorRow(0);
         this.boxPainting.setColorColumn(0);
+        this.boxPainting.resetIsRowAnimated(i,y);
       }
     }
   }
@@ -175,6 +201,11 @@ export class GameLoopService {
     return this.row;
   }
 
+  public getIsWin()
+  {
+    return this.isWin;
+  }
+
   public getIsEnded() {
     return this.isEnded;
   }
@@ -183,8 +214,4 @@ export class GameLoopService {
   public getMatrix(): string[][] {
     return this.matrix;
   }
-
-  constructor(private wordEditingService: WordEditingService,
-    private boxPainting: BoxPaintingService,
-    private dialog: MatDialog) { }
 }
