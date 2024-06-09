@@ -4,8 +4,9 @@ Hra založená na križovkárskej appke od New York Times. Cieľom bolo vytvori�
 
 ## Stav
 
-Momentalne je funkčný prototyp.
+Aplikácia je hotová na 95%. 
+
+## Video
 
 ## TO DO
-- Pridanie animacií pre zobrazenie farieb
 - Kontrola zadavaneho slova, resp. je to realne slovo?
