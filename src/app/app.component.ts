@@ -10,9 +10,9 @@ import { FirebaseService } from './services/firebase/firebase.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
-  constructor(private wordEditingService: WordEditingService, 
-    private gameLoop: GameLoopService, 
+
+  constructor(private wordEditingService: WordEditingService,
+    private gameLoop: GameLoopService,
     private boxPainting: BoxPaintingService,
     private firebaseService: FirebaseService) { }
 
@@ -24,7 +24,7 @@ export class AppComponent {
   isDifficultyHard = this.gameLoop.getIsDifficultyHard();
   isDisabled = this.gameLoop.getIsDisabled();
 
-  
+
 
   public dvojice = this.boxPainting.getTuple();
 
@@ -36,60 +36,52 @@ export class AppComponent {
 
 
   // Resetuje/setuje defaultne farby pre klavesnicu
-  public resetColorForKeyboard()
-  {
+  public resetColorForKeyboard() {
     this.boxPainting.resetColorForKeyboard();
   }
 
   // Funkcia dokáže nastavit/zmeniť farbu v tuple pre pismeno
-  public setColorForKey(letter: string, color: string)
-  {
+  public setColorForKey(letter: string, color: string) {
     this.boxPainting.setColorForKey(letter, color);
   }
 
   // Funkcia čita farbu na zaklade pismena z tuple do divka
-  public getBackgroundColorKey(letter: string) : string
-  {
+  public getBackgroundColorKey(letter: string): string {
     return this.boxPainting.getBackgroundColorKey(letter)
   }
 
   // Slider meni obtiažnosť
-  public changeStateOfSlide(){
-      this.isDifficultyHard = !this.isDifficultyHard;
-      if(this.isDifficultyHard == true)
-      {
-        // Hard
-        this.wordEditingService.switchDiff("hard")
-      }
-      else{
-        // Easy
-        this.wordEditingService.switchDiff("easy")
-      }
+  public changeStateOfSlide() {
+    this.isDifficultyHard = !this.isDifficultyHard;
+    if (this.isDifficultyHard == true) {
+      // Hard
+      this.wordEditingService.switchDiff("hard")
+    }
+    else {
+      // Easy
+      this.wordEditingService.switchDiff("easy")
+    }
   }
 
   // Funkcia vrati na aku farbu sa ma zmenit policko
-  public getColor(number : number) : string
-  {
+  public getColor(number: number): string {
     return this.boxPainting.getColor(number);
   }
 
   // Funkcia prechadza polom a vrati ake cislo je na kazdej pozicii
-  public colorState() : number
-  {
+  public colorState(): number {
     return this.boxPainting.colorState();
   }
 
   // Keyboard input
   @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
+  handleKeyboardEvent(event: KeyboardEvent) {
     const key = event.key;
-    if(key.charCodeAt(0) > 96 && key.charCodeAt(0) < 123)
-    {
+    if (key.charCodeAt(0) > 96 && key.charCodeAt(0) < 123) {
       this.sentLetter(key.toUpperCase());
     }
-    if(this.isDifficultyHard == true)
-    {
-      switch(key) {
+    if (this.isDifficultyHard == true) {
+      switch (key) {
         case 'ľ':
           this.sentLetter('Ľ')
           break;
@@ -143,48 +135,47 @@ export class AppComponent {
           break;
       }
     }
-      switch(key)
-      {
-        case 'Enter':
-          this.enter()
-          break;
-        case 'Backspace':
-          this.backspace()
-          break;
-      }
+    switch (key) {
+      case 'Enter':
+        if(this.gameLoop.isEnded == false)
+          {
+            this.enter()
+          }
+        break;
+      case 'Backspace':
+        this.backspace()
+        break;
+    }
   }
-  
+
 
   // Posle pismeno do mriezky
   public sentLetter(letter: string): void {
     //console.log(this.gameLoop.getIsEnded())
-    if(this.gameLoop.getIsEnded() == false)
-      {
-        this.gameLoop.sentLetter(letter);
-      }
+    if (this.gameLoop.getIsEnded() == false) {
+      this.gameLoop.sentLetter(letter);
+    }
   }
 
   //Vymazavanie znaku
-  public backspace(): void{
+  public backspace(): void {
     this.gameLoop.backspace();
   }
 
   //Potvrdi slovo v mriezke
   public enter(): void {
+    console.log("Enter");
     this.gameLoop.enter();
     this.updateVariables();
   }
 
   // Resetuje hru
-  public resetGame(): void
-  {
+  public resetGame(): void {
     this.gameLoop.resetGame();
-    this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
-    //this.updateVariables();
+    this.updateVariables();
   }
 
-  public updateVariables(): void
-  {
+  public updateVariables(): void {
     this.matrix = this.gameLoop.getMatrix();
     this.row = this.gameLoop.getRow();
     this.isDisabled = this.gameLoop.getIsDisabled();
