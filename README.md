@@ -4,8 +4,11 @@ Hra založená na križovkárskej appke od New York Times. Cieľom bolo vytvori�
 
 ## Stav
 
-Momentalne je funkčný prototyp.
+Aplikácia je hotová na 95%. 
+
+## Video
+
+[![WordleSK](https://img.youtube.com/vi/OeNh4KIELAE/0.jpg)](https://www.youtube.com/watch?v=OeNh4KIELAE&ab_channel=Bujak)
 
 ## TO DO
-- Pridanie animacií pre zobrazenie farieb
 - Kontrola zadavaneho slova, resp. je to realne slovo?
