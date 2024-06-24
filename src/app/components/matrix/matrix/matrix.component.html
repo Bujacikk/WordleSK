@@ -1,0 +1,5 @@
+<div class="matrix">
+    <div *ngFor="let row of matrix; let rowIndex = index" class="row">
+      <div *ngFor="let cell of row; let i = index" [ngStyle]="{backgroundColor: getColor(colorState())}" class="array" [class.animate]="isRowAnimated[rowIndex][i]">{{ cell }}</div>
+    </div>
+</div>

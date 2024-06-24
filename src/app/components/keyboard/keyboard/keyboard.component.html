@@ -1,0 +1,55 @@
+<div class="keyboard">
+    <div *ngIf="isDifficultyHard" class="row">
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ľ')}" class="key" (click)="sentLetter('Ľ')">Ľ</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Š')}" class="key" (click)="sentLetter('Š')">Š</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Č')}" class="key" (click)="sentLetter('Č')">Č</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ť')}" class="key" (click)="sentLetter('Ť')">Ť</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ž')}" class="key" (click)="sentLetter('Ž')">Ž</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ý')}" class="key" (click)="sentLetter('Ý')">Ý</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Á')}" class="key" (click)="sentLetter('Á')">Á</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Í')}" class="key" (click)="sentLetter('Í')">Í</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('É')}" class="key" (click)="sentLetter('É')">É</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ĺ')}" class="key" (click)="sentLetter('Ĺ')">Ĺ</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ď')}" class="key" (click)="sentLetter('Ď')">Ď</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ŕ')}" class="key" (click)="sentLetter('Ŕ')">Ŕ</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ó')}" class="key" (click)="sentLetter('Ó')">Ó</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ú')}" class="key" (click)="sentLetter('Ú')">Ú</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ä')}" class="key" (click)="sentLetter('Ä')">Ä</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ň')}" class="key" (click)="sentLetter('Ň')">Ň</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Ô')}" class="key" (click)="sentLetter('Ô')">Ô</div>
+    </div>
+    <div class="row">
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Q')}" class="key" (click)="sentLetter('Q')">Q</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('W')}" class="key" (click)="sentLetter('W')">W</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('E')}" class="key" (click)="sentLetter('E')">E</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('R')}" class="key" (click)="sentLetter('R')">R</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('T')}" class="key" (click)="sentLetter('T')">T</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Y')}" class="key" (click)="sentLetter('Y')">Y</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('U')}" class="key" (click)="sentLetter('U')">U</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('I')}" class="key" (click)="sentLetter('I')">I</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('O')}" class="key" (click)="sentLetter('O')">O</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('P')}" class="key" (click)="sentLetter('P')">P</div>
+    </div>
+    <div class="row">
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('A')}" class="key" (click)="sentLetter('A')">A</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('S')}" class="key" (click)="sentLetter('S')">S</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('D')}" class="key" (click)="sentLetter('D')">D</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('F')}" class="key" (click)="sentLetter('F')">F</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('G')}" class="key" (click)="sentLetter('G')">G</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('H')}" class="key" (click)="sentLetter('H')">H</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('J')}" class="key" (click)="sentLetter('J')">J</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('K')}" class="key" (click)="sentLetter('K')">K</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('L')}" class="key" (click)="sentLetter('L')">L</div>
+    </div>
+    <div class="row">
+      <div class="key" id="enter" (click)="enter()">Enter</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('Z')}" class="key" (click)="sentLetter('Z')">Z</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('X')}" class="key" (click)="sentLetter('X')">X</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('C')}" class="key" (click)="sentLetter('C')">C</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('V')}" class="key" (click)="sentLetter('V')">V</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('B')}" class="key" (click)="sentLetter('B')">B</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('N')}" class="key" (click)="sentLetter('N')">N</div>
+      <div [ngStyle]="{backgroundColor: getBackgroundColorKey('M')}" class="key" (click)="sentLetter('M')">M</div>
+      <div class="key" id="backspace" (click)="backspace()">&larr;</div>
+    </div>
+  </div>

@@ -12,11 +12,17 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { MatButtonModule } from '@angular/material/button';
+import { HeaderComponent } from './components/header/header/header.component';
+import { KeyboardComponent } from './components/keyboard/keyboard/keyboard.component';
+import { MatrixComponent } from './components/matrix/matrix/matrix.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PopUpComponent,
+    HeaderComponent,
+    KeyboardComponent,
+    MatrixComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,15 @@
 h1 {
     text-align: center;
+    color: white;
 }
 
 .center{
     display: flex;
     flex-direction: column;
+    
 }
 
-.bla{
-    align-items: center;
-}
+.mat-button {
+    background-color: rgb(255, 64, 129);
+  }
+

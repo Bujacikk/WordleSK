@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 600px;
+  }
+
+.slider {
+    margin: 10px;
+    color: blue;
+    margin-left: 20px;
+  }
+
+.title {
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+    font-family: "nyt-karnakcondensed";
+  }
+
+.mat-button {
+    background-color: rgb(255, 64, 129);
+  }

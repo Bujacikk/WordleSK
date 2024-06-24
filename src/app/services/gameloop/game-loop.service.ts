@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WordEditingService } from '../word-editing/word-editing.service'
 import { BoxPaintingService } from '../box-painting/box-painting.service';
-import { PopUpComponent } from '../../components/pop-up/pop-up.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +15,16 @@ export class GameLoopService {
     ['', '', '', '', '',],
     ['', '', '', '', '',],
     ['', '', '', '', '',]]
-
+  
   matrixLength = this.matrix[0].length;
   row = 0;
   isEnded = false;
-  isDifficultyHard = true;
-  isDisabled = false;
-  isWin = false;
+  isDifficultyHard = new Subject<boolean>();
+  isDisabled = new Subject<boolean>();
+  isWin = new Subject<boolean | undefined>();
 
   constructor(private wordEditingService: WordEditingService,
-    private boxPainting: BoxPaintingService,
-    private dialog: MatDialog) { }
+    private boxPainting: BoxPaintingService) { }
 
   // Vrati hodnotu stlpca v mriezke
   public getColumn(): number {
@@ -39,6 +37,7 @@ export class GameLoopService {
     return counter;
   }
 
+  // Vráti prázdnu poziciu na ktorej sa práve nachádza
   public getCurrentFreePossition(): number {
     for (let i = 0; i < this.matrixLength; i++) {
       if (this.matrix[this.row][i] == '') {
@@ -81,15 +80,14 @@ export class GameLoopService {
   public enter(): void {
     if (this.getColumn() == 5) {
       this.setAnimation(this.row);
-      this.isDisabled = true;
+      this.isDisabled.next(true);
       this.boxPainting.getArrayOfColorForKeyBoard(this.takeAGuess(), this.checkWord(this.takeAGuess()));
 
       var numberAnwers = this.checkWord(this.takeAGuess());
       this.boxPainting.addRowNumbersIntoMatrixColor(numberAnwers, this.row);
       if (this.sumArray(numberAnwers) == 5) {
         this.isEnded = true;
-        this.isWin = true;  
-        this.dialog.open(PopUpComponent);
+        this.isWin.next(true) 
         return;
       }
       if (this.row < 5) 
@@ -99,8 +97,7 @@ export class GameLoopService {
       else 
       {
         this.isEnded = true;
-        this.isWin = false;  
-        this.dialog.open(PopUpComponent);
+        this.isWin.next(false)   
         return;
       }
       return
@@ -170,11 +167,11 @@ export class GameLoopService {
   // Resetuje hru
   public resetGame(): void {
     this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
-
-    this.isDisabled = false;
+    this.isDisabled.next(false);
     this.boxPainting.clearTuple();
     this.boxPainting.resetColorForKeyboard();
     this.isEnded = false;
+    this.isWin.next(undefined);
     
     for (let i = 0; i < 6; i++) {
       for (let y = 0; y < 5; y++) {
@@ -188,22 +185,13 @@ export class GameLoopService {
     }
   }
 
-
-  public getIsDisabled(): boolean {
-    return this.isDisabled;
+  public setIsDifficultyHard(diff : boolean) {
+    this.isDifficultyHard.next(diff);
   }
 
-  public getIsDifficultyHard(): boolean {
-    return this.isDifficultyHard;
-  }
 
   public getRow() {
     return this.row;
-  }
-
-  public getIsWin()
-  {
-    return this.isWin;
   }
 
   public getIsEnded() {

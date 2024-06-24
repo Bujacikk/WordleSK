@@ -19,12 +19,16 @@ export class PopUpComponent implements OnInit {
   word: string = ''
   textResult = ''
   value: any;
-
-  diff: boolean = false
+  isWin: boolean | undefined;
+  diff: boolean = false;
 
   ngOnInit(): void {
     this.word = this.wordEditingService.getWord();
-    this.sentResult(this.gameloop.getIsWin());
+    this.gameloop.isWin
+    .subscribe(x => 
+      this.isWin = x);
+
+    this.sentResult(this.isWin);
   }
 
   onClose(): void {
@@ -32,7 +36,7 @@ export class PopUpComponent implements OnInit {
     this.gameloop.resetGame();
   }
 
-  sentResult(isEnded: boolean): void {
+  sentResult(isEnded: boolean | undefined): void {
     if (isEnded) this.textResult = "Gratulujem";
     else this.textResult = "Bohužial";
   }
