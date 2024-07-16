@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { BoxPaintingService } from 'src/app/services/box-painting/box-painting.service';
-import { GameLoopService } from 'src/app/services/gameloop/game-loop.service';
+import { BoxPaintingService } from 'src/app/services/WordleSK/box-painting/box-painting.service';
+import { GameLoopService } from 'src/app/services/WordleSK/gameloop/game-loop.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PopUpComponent } from '../../pop-up/pop-up.component';
+import { PopUpComponent } from '../../WordleSKcomponents/pop-up/pop-up.component';
 
 @Component({
   selector: 'app-keyboard',

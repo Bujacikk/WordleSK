@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameLoopService } from '../../../services/gameloop/game-loop.service';
-import { WordEditingService } from 'src/app/services/word-editing/word-editing.service';
+import { GameLoopService } from '../../../services/WordleSK/gameloop/game-loop.service';
+import { WordEditingService } from '../../../services/WordleSK/word-editing/word-editing.service';
 
 @Component({
   selector: 'app-header',

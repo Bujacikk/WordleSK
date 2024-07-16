@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GameLoopService } from 'src/app/services/gameloop/game-loop.service';
-import { WordEditingService } from 'src/app/services/word-editing/word-editing.service';
+import { GameLoopService } from 'src/app/services/WordleSK/gameloop/game-loop.service';
+import { WordEditingService } from '../../../services/WordleSK/word-editing/word-editing.service';
 
 @Component({
   selector: 'app-pop-up',
@@ -19,15 +19,12 @@ export class PopUpComponent implements OnInit {
   word: string = ''
   textResult = ''
   value: any;
-  isWin: boolean | undefined;
+  isWin: boolean | undefined = true;
   diff: boolean = false;
 
   ngOnInit(): void {
     this.word = this.wordEditingService.getWord();
-    this.gameloop.isWin
-    .subscribe(x => 
-      this.isWin = x);
-
+    this.isWin = this.gameloop.getIsWin();
     this.sentResult(this.isWin);
   }
 

@@ -1,0 +1,13 @@
+<div class="container" routerLink="/">
+    <div class="title">
+      Bujaková hračkáreň
+      <hr>
+    </div>
+  </div>
+  
+  <div class="games">
+    <div *ngFor="let game of gamesArray" [routerLink]="game.route" class="game">
+      <img [src]="game.url" alt="{{game.name}}">
+      <h1>{{game.name}}</h1>
+    </div>
+  </div>

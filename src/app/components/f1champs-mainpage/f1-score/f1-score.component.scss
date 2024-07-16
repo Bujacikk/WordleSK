@@ -1,0 +1,75 @@
+.score-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 30px;
+}
+
+.scoreFont {
+    position: absolute;
+    font-size: 64px;
+    z-index: 1;
+}
+
+.progress-circle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(green var(--progress), transparent 0);
+    clip-path: circle(50% at 50%);
+    z-index: 0;
+}
+
+@media only screen and (max-width: 1800px) {
+    .score-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .score {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border-radius: 50%;
+        margin-right: 30px;
+    }
+    
+    .scoreFont {
+        position: absolute;
+        font-size: 48px;
+        z-index: 1;
+    }
+    
+    .progress-circle {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: conic-gradient(green var(--progress), transparent 0);
+        clip-path: circle(50% at 50%);
+        z-index: 0;
+    }
+  }

@@ -1,0 +1,5 @@
+<div class="choices">
+    <div *ngFor="let choice of choices; let i = index" class="choice" (click)="takeAGuess(choice)" [ngStyle]="{'background-color': colors[i]}">
+      <p class="choiceFont">{{ choice }}</p>
+    </div>
+</div>

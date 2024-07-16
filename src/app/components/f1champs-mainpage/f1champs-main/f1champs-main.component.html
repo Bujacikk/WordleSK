@@ -1,0 +1,37 @@
+<div *ngIf="!isMobileView" class="container">
+    <div class="upper">
+      <app-f1-description></app-f1-description>
+      <app-f1-image></app-f1-image>
+      <app-f1-score></app-f1-score>      
+    </div>
+    <app-f1-choices></app-f1-choices>
+    <div *ngIf="this.isEndedRound" class="nextButton" (click)="nextChamp()">
+      Next &raquo;
+    </div>
+</div>
+
+<div *ngIf="isMobileView" class="container">
+  <div class="upper">
+    <app-f1-image></app-f1-image>
+  </div>
+  <div class="bottom">
+    <div class="left">
+      <app-f1-choices></app-f1-choices>
+    </div>
+    <div class="right">
+      <app-f1-description></app-f1-description>
+      <div class="rightBottom">
+        <app-f1-score></app-f1-score>  
+        <div *ngIf="this.isEndedRound" class="nextButton" (click)="nextChamp()">
+          Next &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+   
+
+
+
+  

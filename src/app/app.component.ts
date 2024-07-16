@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { WordEditingService } from './services/word-editing/word-editing.service'
-import { FirebaseService } from './services/firebase/firebase.service';
+import { WordEditingService } from './services/WordleSK/word-editing/word-editing.service'
 
 
 @Component({
@@ -11,18 +10,12 @@ import { FirebaseService } from './services/firebase/firebase.service';
 export class AppComponent {
 
   constructor(private wordEditingService: WordEditingService,
-    private firebaseService: FirebaseService
   ) { }
-  //wordToCheck = 'BEDÁR\n';
-  //wordExists = true;
+
 
   ngOnInit(): void {
     this.wordEditingService.getValueByKey(this.wordEditingService.generateRandomNumber().toString());
-    
-    /*this.firebaseService.wordExists(this.wordToCheck).subscribe(exists => {
-      this.wordExists = exists;
-      console.log(`Slovo ${this.wordToCheck} ${exists ? 'existuje' : 'neexistuje'} v databáze.`);
-    });*/
+  
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BoxPaintingService } from 'src/app/services/box-painting/box-painting.service';
-import { GameLoopService } from 'src/app/services/gameloop/game-loop.service';
+import { BoxPaintingService } from 'src/app/services/WordleSK/box-painting/box-painting.service';
+import { GameLoopService } from 'src/app/services/WordleSK/gameloop/game-loop.service';
 
 @Component({
   selector: 'app-matrix',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WordEditingService } from '../word-editing/word-editing.service'
 import { BoxPaintingService } from '../box-painting/box-painting.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class GameLoopService {
   isEnded = false;
   isDifficultyHard = new Subject<boolean>();
   isDisabled = new Subject<boolean>();
-  isWin = new Subject<boolean | undefined>();
+  isWin = new BehaviorSubject<boolean | undefined>(false);
 
   constructor(private wordEditingService: WordEditingService,
     private boxPainting: BoxPaintingService) { }
@@ -87,7 +87,7 @@ export class GameLoopService {
       this.boxPainting.addRowNumbersIntoMatrixColor(numberAnwers, this.row);
       if (this.sumArray(numberAnwers) == 5) {
         this.isEnded = true;
-        this.isWin.next(true) 
+        this.isWin.next(true);
         return;
       }
       if (this.row < 5) 
@@ -189,6 +189,9 @@ export class GameLoopService {
     this.isDifficultyHard.next(diff);
   }
 
+  public getIsWin(){
+    return this.isWin.getValue();
+  }
 
   public getRow() {
     return this.row;

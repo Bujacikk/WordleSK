@@ -2,7 +2,7 @@
     <mat-slide-toggle class="slider" [disabled]="isDisabled" [checked]="isDifficultyHard"
       (change)="changeStateOfSlide()">
     </mat-slide-toggle>
-    <div class="title">Wordle SK</div>
+    <div class="title" routerLink="/">Wordle SK</div>
     <button mat-flat-button class="mat-button" (click)="getHint()" (keydown.enter)="$event.preventDefault()">Pomôcka</button>
     <!-- <div class="key" id="enter" (click)="resetGame()">Reset</div> -->
 </div>
