@@ -14,9 +14,9 @@ Aplikácia je hotová na 95%.
 ## Screenshots
 <img src="https://github.com/user-attachments/assets/a2c9594d-9af8-4c03-8eb8-fb440c4db739" width="500">
 
-![wordle](https://github.com/user-attachments/assets/76bdc816-3c66-4c27-b367-8d9ce0b24338)
+<img src="https://github.com/user-attachments/assets/76bdc816-3c66-4c27-b367-8d9ce0b24338" width="500">
 
-![F1 quiz](https://github.com/user-attachments/assets/99cac759-92ab-402e-ac9b-bc3cf555150e)
+<img src="https://github.com/user-attachments/assets/99cac759-92ab-402e-ac9b-bc3cf555150e" width="500">
 
 ## TO DO
 - Kontrola zadavaneho slova, resp. je to realne slovo?
